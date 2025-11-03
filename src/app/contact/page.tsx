@@ -9,13 +9,11 @@ import {
   slideInLeft,
   slideInRight,
 } from "@/utils/animations";
-import { useRouter } from "next/navigation";
 
 
 export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const router = useRouter();
 
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
