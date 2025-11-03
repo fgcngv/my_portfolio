@@ -1,3 +1,6 @@
+import { MotionProps } from "framer-motion";
+
+
 export const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -24,26 +27,31 @@ export const staggerContainer = {
   }
 }
 
-// export const cardHover = {
-//   whileHover: { scale: 1.05 },
-//   transition: { type: "spring", stiffness: 300 }
-// }
+export const cardHover: MotionProps = {
+  whileHover: {
+    scale: 1.05,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+    },
+  },
+};
 
-export const cardHover = {
-  whileHover: { 
-    scale: 1.05, 
-    transition: { 
-      type: 'spring',
-       stiffness: 300 }
-   },
-}
+// export const cardHover = {
+//   whileHover: { 
+//     scale: 1.05, 
+//     transition: { 
+//       type: 'spring',
+//        stiffness: 300 }
+//    },
+// }
 
 // export const cardHoverSmall = {
 //   whileHover: { scale: 1.02 },
 //   transition: { type: "spring", stiffness: 300 }
 // }
 
-export const cardHoverSmall = {
+export const cardHoverSmall : MotionProps = {
   whileHover: { scale: 1.02,
      transition: {
        type: 'spring',
