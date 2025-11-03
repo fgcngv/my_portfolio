@@ -71,3 +71,9 @@ The Devfolio project is structured to be intuitive and easy to navigate.
 
 By understanding the structure and components of Devfolio, you can easily customize and extend the project to fit your needs.
 
+
+
+
+git add .
+git commit -m "Describe your changes"
+git push

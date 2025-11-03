@@ -1,85 +1,77 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa'
-import { motion } from 'framer-motion'
-import { fadeInUp, fadeIn, slideInLeft, slideInRight } from '@/utils/animations'
+import { useState } from "react";
+import { FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
+import {
+  fadeInUp,
+  fadeIn,
+  slideInLeft,
+  slideInRight,
+} from "@/utils/animations";
+import { useRouter } from "next/navigation";
 
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-}
-
-type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export default function Contact() {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    message: ''
-  })
-  const [status, setStatus] = useState<FormStatus>('idle')
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setStatus('loading')
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      if (!response.ok) throw new Error('Failed to send message')
-      
-      setStatus('success')
-      setFormData({ name: '', email: '', message: '' })
-    } catch {
-      setStatus('error')
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+  
+    const form = e.currentTarget; //  store reference before await
+  
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+  
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+  
+    if (res.ok) {
+      setMessage(" Message sent successfully! Thank you");
+      form.reset(); // 
+    } else {
+      setMessage(" Failed to send message.");
     }
+    setLoading(false);
   }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }))
-  }
+  
 
   return (
     <div className="container max-w-7xl mx-auto py-12">
-      <motion.h1 
-        className="text-4xl font-bold mb-8 text-center"
-        {...fadeInUp}
-      >
+      <motion.h1 className="text-4xl font-bold mb-8 text-center" {...fadeInUp}>
         Contact Me
       </motion.h1>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Contact Information */}
-        <motion.div 
-          className="space-y-8"
-          {...slideInLeft}
-        >
+        <motion.div className="space-y-8" {...slideInLeft}>
           <motion.div {...fadeInUp}>
             <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
             <p className="dark:text-gray-300 text-gray-700">
-              I&apos;m always open to discussing new projects, creative ideas, or
-              opportunities to be part of your visions.
+              I&apos;m always open to discussing new projects, creative ideas,
+              or opportunities to be part of your visions.
             </p>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             className="space-y-4"
             variants={fadeIn}
             initial="initial"
             animate="animate"
           >
-            <motion.div 
+            <motion.div
               className="flex items-center gap-4"
               variants={fadeInUp}
               whileHover={{ x: 10 }}
@@ -88,13 +80,16 @@ export default function Contact() {
               <FaEnvelope className="h-6 w-6 text-primary" />
               <div>
                 <h3 className="font-semibold">Email</h3>
-                <a href="mailto:birhanugezahegn099@gmail.com" className="text-gray-400 dark:text-gray-300 hover:text-blue-500">
+                <a
+                  href="mailto:birhanugezahegn099@gmail.com"
+                  className="text-gray-400 dark:text-gray-300 hover:text-blue-500"
+                >
                   birhanugezahegn099@gmail.com
                 </a>
               </div>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="flex items-center gap-4"
               variants={fadeInUp}
               whileHover={{ x: 10 }}
@@ -103,18 +98,25 @@ export default function Contact() {
               <FaPhone className="h-6 w-6 text-primary" />
               <div>
                 <h3 className="font-semibold">Phone</h3>
-                <div className='flex  gap-2'>
-                  <a href="tel:+251961064370" className="text-gray-400 dark:text-gray-300 hover:text-blue-500">
+                <div className="flex  gap-2">
+                  <a
+                    href="tel:+251961064370"
+                    className="text-gray-400 dark:text-gray-300 hover:text-blue-500"
+                  >
                     +251 961064370
-                  </a> <span>Or</span>
-                  <a href="tel:+251998169294" className=" text-gray-400 dark:text-gray-300 hover:text-blue-500">
-                  +251 998169294
-                </a>
+                  </a>{" "}
+                  <span>Or</span>
+                  <a
+                    href="tel:+251998169294"
+                    className=" text-gray-400 dark:text-gray-300 hover:text-blue-500"
+                  >
+                    +251 998169294
+                  </a>
                 </div>
               </div>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="flex items-center gap-4"
               variants={fadeInUp}
               whileHover={{ x: 10 }}
@@ -123,106 +125,66 @@ export default function Contact() {
               <FaMapMarkerAlt className="h-6 w-6 text-primary" />
               <div>
                 <h3 className="font-semibold">Location</h3>
-                <p className="dark:text-gray-300 text-gray-400">Bahirdar University</p>
+                <p className="dark:text-gray-300 text-gray-400">
+                  Bahirdar University
+                </p>
               </div>
             </motion.div>
           </motion.div>
         </motion.div>
-        
+
         {/* Contact Form */}
 
-        <h1 className='text-2xl font-bold text-blue-500 text-center'>Send Message</h1>
-        <motion.div 
+        <h1 className="text-2xl font-bold text-blue-500 text-center">
+          Send Message
+        </h1>
+        <motion.div
           className="bg-white dark:bg-dark/50 p-6 rounded-lg shadow-md"
           {...slideInRight}
         >
-          <motion.form 
-            onSubmit={handleSubmit} 
-            className="space-y-6"
-            variants={fadeIn}
-            initial="initial"
-            animate="animate"
-          >
-            <motion.div variants={fadeInUp}>
-              <label htmlFor="name" className="block text-sm font-medium mb-2">
-                Name
-              </label>
+          <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto shadow-gray-600 border p-6 rounded-2xl">
+            <div className="flex flex-col">
+              <label htmlFor="name">Name:</label>
               <input
                 type="text"
-                id="name"
                 name="name"
-                placeholder='Enter Your Name here'
-                value={formData.name}
-                onChange={handleChange}
+                placeholder="Enter your name"
+                className="border p-2 rounded bg-gray-600 text-white"
                 required
-                className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-dark focus:ring-2 focus:ring-primary focus:border-transparent"
               />
-            </motion.div>
-            
-            <motion.div variants={fadeInUp}>
-              <label htmlFor="email" className="block text-sm font-medium mb-2">
-                Email
-              </label>
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="email">Email:</label>
               <input
                 type="email"
-                id="email"
-                placeholder='Enter Your Email Address here'
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
+                placeholder="Enter your email"
+                className="border p-2 rounded bg-gray-600 text-white"
                 required
-                className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-dark focus:ring-2 focus:ring-primary focus:border-transparent"
               />
-            </motion.div>
-            
-            <motion.div variants={fadeInUp}>
-              <label htmlFor="message" className="block text-sm font-medium mb-2">
-                Message
-              </label>
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="message">Message:</label>
               <textarea
-                id="message"
                 name="message"
-                placeholder='Write Your Message Here!'
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows={4}
-                className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-dark focus:ring-2 focus:ring-primary focus:border-transparent"
-              />
-            </motion.div>
-            
-            <motion.button
+                rows={5}
+                placeholder="Enter your message"
+                className="border p-2 rounded bg-gray-600 text-white"
+              ></textarea>
+            </div>
+
+            <button
               type="submit"
-              disabled={status === 'loading'}
-              className="w-full btn bg-blue-500 cursor-pointer"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              className="p-2 rounded bg-blue-500 w-full font-bold hover:bg-blue-600 active:bg-blue-700"
+              disabled={loading}
             >
-              {status === 'loading' ? 'Sending...' : 'Send Message'}
-            </motion.button>
-            
-            {status === 'success' && (
-              <motion.p 
-                className="text-green-500 text-center"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                Message sent successfully!
-              </motion.p>
-            )}
-            
-            {status === 'error' && (
-              <motion.p 
-                className="text-red-500 text-center"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                Failed to send message. Please try again.
-              </motion.p>
-            )}
-          </motion.form>
+              {loading ? "Sending..." : "Send Message"}
+            </button>
+
+            {message && <p className="text-center mt-2">{message}</p>}
+          </form>
         </motion.div>
       </div>
     </div>
-  )
-} 
+  );
+}

@@ -57,7 +57,7 @@ export default function Hero() {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-2xl text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-blue-500  transition-colors"
+              className="text-2xl text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-500  transition-colors"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -67,7 +67,7 @@ export default function Hero() {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-2xl text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-blue-500 transition-colors"
+              className="text-2xl text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-500 transition-colors"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
             >
