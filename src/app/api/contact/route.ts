@@ -1,58 +1,105 @@
-// import { NextResponse } from 'next/server'
+// import { NextResponse } from "next/server";
+// import { PrismaClient } from "@prisma/client";
 
-// interface ContactRequestBody {
-//   name: string;
-//   email: string;
-//   message: string;
-// }
+// const prisma = new PrismaClient();
 
-// export async function POST(request: Request) {
+// export async function POST(req: Request) {
 //   try {
-//     await request.json() as ContactRequestBody
-//     // Here you would typically:
-//     // 1. Validate the input
-//     // 2. Send an email using a service like SendGrid, AWS SES, etc.
-//     // 3. Store the message in a database if needed
+//     const { name, email, message } = await req.json();
 
-//     // For now, we'll just simulate a successful response
-//     return NextResponse.json(
-//       { message: 'Message sent successfully' },
-//       { status: 200 }
-//     )
-//   } catch (error: unknown) {
-//     const errorMessage = error instanceof Error ? error.message : 'Failed to send message'
-//     return NextResponse.json(
-//       { message: errorMessage },
-//       { status: 500 }
-//     )
+//     if (!name || !email) {
+//       return NextResponse.json({ error: "Name and email are required" }, { status: 400 });
+//     }
+
+//     const newMessage = await prisma.users.create({
+//       data: { name, email, message },
+//     });
+
+//     return NextResponse.json({ success: true, data: newMessage }, { status: 201 });
+//   } catch (error) {
+//     console.error(error);
+//     return NextResponse.json({ error: "Failed to save message" }, { status: 500 });
 //   }
-// } 
-
-
-
+// }
 
 
 
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import nodemailer from "nodemailer";
 
-const prisma = new PrismaClient();
+type RequestBody = {
+  email: string;
+  message: string;
+  name?: string;
+  subject?: string;
+};
+
+async function createTransporter() {
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, NODE_ENV } = process.env;
+
+  if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
+    return nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: Number(SMTP_PORT || 587),
+      secure: Number(SMTP_PORT) === 465, // true for 465 (SSL), false for 587 (STARTTLS)
+      auth: {
+        user: SMTP_USER,
+        pass: SMTP_PASS,
+      },
+      // 👇 Option 1 fix: allow self-signed or intercepted TLS certs (dev only)
+      tls: {
+        rejectUnauthorized: NODE_ENV === "production" ? true : false,
+      },
+    });
+  }
+
+  // Dev fallback: Ethereal test account
+  const testAccount = await nodemailer.createTestAccount();
+  return nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    auth: {
+      user: testAccount.user,
+      pass: testAccount.pass,
+    },
+  });
+}
 
 export async function POST(req: Request) {
   try {
-    const { name, email, message } = await req.json();
+    const body: RequestBody = await req.json();
 
-    if (!name || !email) {
-      return NextResponse.json({ error: "Name and email are required" }, { status: 400 });
+    // Basic validation
+    if (!body.email || !body.message) {
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    const newMessage = await prisma.users.create({
-      data: { name, email, message },
-    });
+    const from = body.email.slice(0, 254);
+    const message = body.message.slice(0, 5000);
+    const name = body.name ? body.name.slice(0, 100) : "Website Visitor";
+    const subject = body.subject || `Message from your portfolio — ${name}`;
 
-    return NextResponse.json({ success: true, data: newMessage }, { status: 201 });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Failed to save message" }, { status: 500 });
+    const transporter = await createTransporter();
+
+    const mailOptions = {
+      from: `"${name}" <${from}>`,
+      to: process.env.SMTP_USER, // your inbox
+      replyTo: from,
+      subject,
+      text: `Message from: ${from}\n\n${message}`,
+      html: `<p><strong>From:</strong> ${from}</p>
+             <p><strong>Name:</strong> ${name}</p>
+             <hr/>
+             <p>${message.replace(/\n/g, "<br/>")}</p>`,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+
+    const previewUrl = nodemailer.getTestMessageUrl(info) || null;
+
+    return NextResponse.json({ ok: true, previewUrl });
+  } catch (err: any) {
+    console.error("Email send error:", err);
+    return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
   }
 }

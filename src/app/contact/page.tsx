@@ -1,5 +1,7 @@
 "use client";
 
+import ContactForm from "../components/ContactForm";
+
 import { useState } from "react";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -137,10 +139,10 @@ export default function Contact() {
           Send Message
         </h1>
         <motion.div
-          className="bg-white dark:bg-dark/50 p-6 rounded-lg shadow-md"
+          className="bg-white dark:bg-dark/50 flex flex-col items-center justify-center p-6 rounded-lg shadow-md"
           {...slideInRight}
         >
-          <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto shadow-gray-600 border p-6 rounded-2xl">
+          {/* <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto shadow-gray-600 border p-6 rounded-2xl">
             <div className="flex flex-col">
               <label htmlFor="name">Name:</label>
               <input
@@ -180,9 +182,27 @@ export default function Contact() {
             </button>
 
             {message && <p className="text-center mt-2">{message}</p>}
-          </form>
+          </form> */}
+
+          <ContactForm />
         </motion.div>
       </div>
     </div>
   );
 }
+
+
+
+
+
+
+// function Contact () {
+//   return ( 
+//     <div>
+//       <h1>Contact Form</h1>
+//       <ContactForm />
+//     </div>
+//    );
+// }
+
+// export default Contact;
