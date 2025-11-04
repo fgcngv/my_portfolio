@@ -13,38 +13,7 @@ import {
 
 
 export default function Contact() {
-  // const [loading, setLoading] = useState(false);
-  // const [message, setMessage] = useState("");
 
-
-  // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   setMessage("");
-  
-  //   const form = e.currentTarget; //  store reference before await
-  
-  //   const formData = new FormData(form);
-  //   const data = {
-  //     name: formData.get("name"),
-  //     email: formData.get("email"),
-  //     message: formData.get("message"),
-  //   };
-  
-  //   const res = await fetch("/api/contact", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(data),
-  //   });
-  
-  //   if (res.ok) {
-  //     setMessage(" Message sent successfully! Thank you");
-  //     form.reset(); // 
-  //   } else {
-  //     setMessage(" Failed to send message.");
-  //   }
-  //   setLoading(false);
-  // }
   
 
   return (
@@ -141,47 +110,7 @@ export default function Contact() {
           className="bg-white dark:bg-dark/50 flex flex-col items-center justify-center p-6 rounded-lg shadow-md"
           {...slideInRight}
         >
-          {/* <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto shadow-gray-600 border p-6 rounded-2xl">
-            <div className="flex flex-col">
-              <label htmlFor="name">Name:</label>
-              <input
-                type="text"
-                name="name"
-                placeholder="Enter your name"
-                className="border p-2 rounded bg-gray-600 text-white"
-                required
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                className="border p-2 rounded bg-gray-600 text-white"
-                required
-              />
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="message">Message:</label>
-              <textarea
-                name="message"
-                rows={5}
-                placeholder="Enter your message"
-                className="border p-2 rounded bg-gray-600 text-white"
-              ></textarea>
-            </div>
 
-            <button
-              type="submit"
-              className="p-2 rounded bg-blue-500 w-full font-bold hover:bg-blue-600 active:bg-blue-700"
-              disabled={loading}
-            >
-              {loading ? "Sending..." : "Send Message"}
-            </button>
-
-            {message && <p className="text-center mt-2">{message}</p>}
-          </form> */}
 
           <ContactForm />
         </motion.div>
@@ -193,15 +122,3 @@ export default function Contact() {
 
 
 
-
-
-// function Contact () {
-//   return ( 
-//     <div>
-//       <h1>Contact Form</h1>
-//       <ContactForm />
-//     </div>
-//    );
-// }
-
-// export default Contact;
