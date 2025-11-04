@@ -26,7 +26,7 @@ export default function Contact() {
         {/* Contact Information */}
         <motion.div className="space-y-8" {...slideInLeft}>
           <motion.div {...fadeInUp}>
-            <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
+            <h2 className="text-2xl font-semibold mb-4">Get in Touch Wuth Me</h2>
             <p className="dark:text-gray-300 text-gray-700">
               I&apos;m always open to discussing new projects, creative ideas,
               or opportunities to be part of your visions.
