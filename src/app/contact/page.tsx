@@ -14,38 +14,38 @@ import {
 
 
 export default function Contact() {
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  // const [loading, setLoading] = useState(false);
+  // const [message, setMessage] = useState("");
 
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
+  // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   setMessage("");
   
-    const form = e.currentTarget; //  store reference before await
+  //   const form = e.currentTarget; //  store reference before await
   
-    const formData = new FormData(form);
-    const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      message: formData.get("message"),
-    };
+  //   const formData = new FormData(form);
+  //   const data = {
+  //     name: formData.get("name"),
+  //     email: formData.get("email"),
+  //     message: formData.get("message"),
+  //   };
   
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+  //   const res = await fetch("/api/contact", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data),
+  //   });
   
-    if (res.ok) {
-      setMessage(" Message sent successfully! Thank you");
-      form.reset(); // 
-    } else {
-      setMessage(" Failed to send message.");
-    }
-    setLoading(false);
-  }
+  //   if (res.ok) {
+  //     setMessage(" Message sent successfully! Thank you");
+  //     form.reset(); // 
+  //   } else {
+  //     setMessage(" Failed to send message.");
+  //   }
+  //   setLoading(false);
+  // }
   
 
   return (

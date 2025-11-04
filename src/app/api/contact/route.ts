@@ -98,7 +98,7 @@ export async function POST(req: Request) {
     const previewUrl = nodemailer.getTestMessageUrl(info) || null;
 
     return NextResponse.json({ ok: true, previewUrl });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Email send error:", err);
     return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
   }
