@@ -19,6 +19,7 @@ export default function Navbar() {
     { href: '/projects', label: 'Projects' },
     // { href: '/blogs', label: 'Blogs' },
     { href: '/contact', label: 'Contact' },
+    { href: '/certificates', label: 'Certificates' },
   ];
 
   return (

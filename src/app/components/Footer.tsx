@@ -25,14 +25,6 @@ export default function Footer() {
               <FaTelegram className="h-6 w-6" />
             </a> 
             <a
-              href="https://twitter.com/yourusername"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-200 hover:text-blue-500 transition-colors"
-            >
-              <FaTwitter className="h-6 w-6" />
-            </a>
-            <a
               href="https://www.linkedin.com/in/tgezahegn-birhanu-08170b328?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BYjcoZhGhS8ytwbrlTcfnxg%3D%3D"
               target="_blank"
               rel="noopener noreferrer"

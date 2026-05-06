@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaTelegram, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaTelegram, FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { fadeInUp, fadeIn, scaleIn } from '@/utils/animations';
 
@@ -43,8 +43,18 @@ export default function Hero() {
             {...fadeInUp}
             transition={{ delay: 0.5 }}
           >
-            <motion.a
+            {/* <motion.a
               href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-2xl text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-500 transition-colors"
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <FaTelegram />
+            </motion.a> */}
+                        <motion.a
+              href="https://t.me/bgdvlpr_man"
               target="_blank"
               rel="noopener noreferrer"
               className="text-2xl text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-500 transition-colors"
@@ -64,14 +74,14 @@ export default function Hero() {
               <FaLinkedin />
             </motion.a>
             <motion.a
-              href="https://twitter.com"
+              href="https://instagram.com/birhanugezahegn099"
               target="_blank"
               rel="noopener noreferrer"
               className="text-2xl text-gray-600 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-500 transition-colors"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
             >
-              <FaTwitter />
+              <FaInstagram />
             </motion.a>
           </motion.div>
           <motion.div 
