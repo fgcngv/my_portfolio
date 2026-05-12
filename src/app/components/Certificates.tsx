@@ -133,6 +133,7 @@ export default function Certificates() {
         >
           My Certificates
         </motion.h2>
+        <h2 className='p-3 text-center'><i>Click on the Certificates to see full Certificate image!</i></h2>
 
         <div className="grid md:grid-cols-3 gap-8">
           {certificates.map((cert, index) => (
